@@ -11,7 +11,6 @@ public class RedirectController(ISession session) : Controller
     [HttpGet("{shortUrlCode}")]
     public async Task<IActionResult> RedirectToLongUrl(string shortUrlCode)
     {
-        var allMappings = await session.Query<UrlMapping>().ToListAsync();
         var targetUrlMapping = await session
             .Query<UrlMapping>()
             .FirstOrDefaultAsync(u => u.ShortUrlCode.Equals(shortUrlCode));
