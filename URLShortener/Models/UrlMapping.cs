@@ -2,8 +2,8 @@
 
 public class UrlMapping
 {
-    public long Id { get; set; }
-    public string? LongUrl { get; set; }
-    public string? ShortUrl { get; set; }
-    public long ClickCounter { get; set; }
+    public virtual long Id { get; set; }
+    public virtual string? LongUrl { get; set; }
+    public virtual string? ShortUrl { get; set; }
+    public virtual long ClickCounter { get; set; }
 }
