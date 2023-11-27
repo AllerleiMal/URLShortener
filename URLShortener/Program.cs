@@ -21,7 +21,7 @@ var sessionFactory = Fluently.Configure()
     })
     .BuildSessionFactory();
 
-builder.Services.AddSingleton<ISessionFactory>(sessionFactory);
+builder.Services.AddSingleton(sessionFactory);
 builder.Services.AddScoped<ISession, ISession>(_ => sessionFactory.OpenSession());
 builder.Services.AddKendo();
 
