@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddMvc().AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
 
 var sessionFactory = Fluently.Configure()
     .Database(MySQLConfiguration.Standard.ConnectionString(builder.Configuration.GetConnectionString("DefaultConnection")))
@@ -22,6 +23,7 @@ var sessionFactory = Fluently.Configure()
 
 builder.Services.AddSingleton<ISessionFactory>(sessionFactory);
 builder.Services.AddScoped<ISession, ISession>(_ => sessionFactory.OpenSession());
+builder.Services.AddKendo();
 
 var app = builder.Build();
 
