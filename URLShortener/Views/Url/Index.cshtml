@@ -1,0 +1,43 @@
+<div id="url-grid"></div>
+
+<script>
+        $(document).ready(function() {
+            $("#url-grid").kendoGrid({
+                        dataSource: {
+                            type: "aspnetmvc-ajax",
+                            transport: {
+                                read: {
+                                    url: "/url/getPage",
+                                    dataType: "json"
+                                }
+                            },
+                            schema: {
+                                data: "Data",
+                                total: "Total",
+                                model: {
+                                    fields: {
+                                        Id: { type: "number" },
+                                        ShortUrlCode: { type: "string" },
+                                        LongUrl: { type: "string" },
+                                        ClickCounter: { type: "number" }
+                                    }
+                                }
+                            },
+                            pageSize: 20,
+                            serverPaging: true
+                        },
+                        pageable: true,
+                        columns: [
+                            { 
+                                field: "ShortUrlCode", 
+                                title: "Short URL",
+                                template: function(dataItem) {
+                                             return window.location.origin + '/' + dataItem.ShortUrlCode;
+                                         }
+                            },
+                            { field: "LongUrl", title: "Long URL" },
+                            { field: "ClickCounter", title: "Redirection Counter" }
+                        ]
+            });
+        });
+    </script>
