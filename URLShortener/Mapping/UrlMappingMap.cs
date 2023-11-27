@@ -8,7 +8,7 @@ public class UrlMappingMap : ClassMap<UrlMapping>
     public UrlMappingMap()
     {
         Id(x => x.Id);
-        Map(x => x.ShortUrl);
+        Map(x => x.ShortUrlCode);
         Map(x => x.LongUrl);
         Map(x => x.ClickCounter);
     }
