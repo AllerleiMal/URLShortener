@@ -4,6 +4,7 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@ViewData["Title"] - URLShortener</title>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/lib/kendo-ui/dist/css/default-main.css"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
@@ -21,10 +22,10 @@
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Url" asp-action="Index">Home</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Url" asp-action="Index">Url list</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Url" asp-action="AddUrl">Privacy</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Url" asp-action="AddUrl">Manage</a>
                     </li>
                 </ul>
             </div>
@@ -36,9 +37,9 @@
         @RenderBody()
     </main>
 </div>
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/lib/kendo-ui/dist/js/kendo.all.min.js"></script>
+<script src="~/js/kendo-ui-license.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
 @await RenderSectionAsync("Scripts", required: false)
 </body>
