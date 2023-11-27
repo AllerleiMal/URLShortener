@@ -15,4 +15,10 @@
       <Folder Include="wwwroot\lib\kendo-ui\dist\css\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="MySql.Data" Version="8.2.0" />
+      <PackageReference Include="NHibernate" Version="5.4.6" />
+      <PackageReference Include="NHibernate.NetCore" Version="8.0.0" />
+    </ItemGroup>
+
 </Project>
