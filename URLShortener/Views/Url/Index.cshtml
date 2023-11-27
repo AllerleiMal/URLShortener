@@ -1,43 +1,29 @@
-<div id="url-grid"></div>
-
-<script>
-        $(document).ready(function() {
-            $("#url-grid").kendoGrid({
-                        dataSource: {
-                            type: "aspnetmvc-ajax",
-                            transport: {
-                                read: {
-                                    url: "/url/getPage",
-                                    dataType: "json"
-                                }
-                            },
-                            schema: {
-                                data: "Data",
-                                total: "Total",
-                                model: {
-                                    fields: {
-                                        Id: { type: "number" },
-                                        ShortUrlCode: { type: "string" },
-                                        LongUrl: { type: "string" },
-                                        ClickCounter: { type: "number" }
-                                    }
-                                }
-                            },
-                            pageSize: 20,
-                            serverPaging: true
-                        },
-                        pageable: true,
-                        columns: [
-                            { 
-                                field: "ShortUrlCode", 
-                                title: "Short URL",
-                                template: function(dataItem) {
-                                             return window.location.origin + '/' + dataItem.ShortUrlCode;
-                                         }
-                            },
-                            { field: "LongUrl", title: "Long URL" },
-                            { field: "ClickCounter", title: "Redirection Counter" }
-                        ]
-            });
-        });
-    </script>
+@(Html.Kendo().Grid<UrlMapping>()    
+    .Name("url-grid")   
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.ShortUrlCode)
+            .ClientTemplate($"<a href=\"{ViewData["baseUrl"]}#= ShortUrlCode #\" class=\"short-url\">{ViewData["baseUrl"]}#= ShortUrlCode #</a>")
+            .Title("Short Url");
+        columns.Bound(p => p.LongUrl).ClientTemplate($"<a href=\"#= LongUrl #\" class=\"long-url\">#= LongUrl #</a>");
+        columns.Bound(p => p.ClickCounter).Width(150);
+        columns.Command(command => command.Destroy()).Width(150);
+    })
+    .Height(550)
+    .Editable(editable => editable.Mode(GridEditMode.InLine).DisplayDeleteConfirmation(false))
+    .Pageable()
+    .Navigatable()
+    .Sortable()
+    .Scrollable()
+    .DataSource(dataSource => dataSource       
+        .Ajax()
+        .PageSize(20)
+        .ServerOperation(true)                
+        .Model(model =>
+        {
+            model.Id(p => p.Id);
+        })
+        .Read("GetPage", "Url")
+        // .Update("Editing_Update", "Grid")
+        .Destroy(destroy => destroy.Action("Delete", "Url").Type(HttpVerbs.Delete))
+    ))
