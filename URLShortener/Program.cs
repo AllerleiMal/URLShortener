@@ -1,7 +1,27 @@
+using FluentNHibernate.Cfg;
+using FluentNHibernate.Cfg.Db;
+using NHibernate;
+using NHibernate.Tool.hbm2ddl;
+using URLShortener.Mapping;
+using ISession = NHibernate.ISession;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+var sessionFactory = Fluently.Configure()
+    .Database(MySQLConfiguration.Standard.ConnectionString(builder.Configuration.GetConnectionString("DefaultConnection")))
+    .Mappings(m => m.FluentMappings.AddFromAssemblyOf<UrlMappingMap>())
+    .ExposeConfiguration(configuration =>
+    {
+        var update = new SchemaUpdate(configuration);
+        update.Execute(false, true);
+    })
+    .BuildSessionFactory();
+
+builder.Services.AddSingleton<ISessionFactory>(sessionFactory);
+builder.Services.AddScoped<ISession, ISession>(_ => sessionFactory.OpenSession());
 
 var app = builder.Build();
 
