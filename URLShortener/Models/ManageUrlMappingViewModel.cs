@@ -2,10 +2,10 @@
 
 namespace URLShortener.Models;
 
-public class ManageShortUrlViewModel
+public class ManageUrlMappingViewModel
 {
-    [Url]
+    [DataType(DataType.Url)]
     public string? LongUrl { get; set; }
-    [Url]
+    [DataType(DataType.Url)]
     public string? ShortUrl { get; set; }
 }
