@@ -20,3 +20,35 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.form-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.form-group{
+  margin-bottom: 10px;
+}
+
+.form{
+  padding: 15px;
+  border: 1px solid rgba(10, 83, 190, 0.49);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.k-grid a{
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.k-grid a.short-url{
+  color: #0c63e4;
+}
+
+.k-grid a.long-url{
+  color: #0ce449;
+}
