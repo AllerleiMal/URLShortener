@@ -3,6 +3,7 @@ using FluentNHibernate.Cfg.Db;
 using NHibernate;
 using NHibernate.Tool.hbm2ddl;
 using URLShortener.Mapping;
+using URLShortener.Repositories;
 using URLShortener.Services;
 using ISession = NHibernate.ISession;
 
@@ -27,6 +28,7 @@ builder.Services.AddScoped<ISession, ISession>(_ => sessionFactory.OpenSession()
 builder.Services.AddKendo();
 
 builder.Services.AddTransient<IUrlShortener, UrlShortener>();
+builder.Services.AddScoped<IUrlMappingRepository, UrlMappingRepository>();
 
 var app = builder.Build();
 
