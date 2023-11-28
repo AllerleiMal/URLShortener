@@ -4,5 +4,5 @@ public interface IUrlShortener
 {
     bool IsUrlValid(string url);
     string GenerateShortUrlCode();
-    string CombineShortUrl(string schema, string host, string shortUrlCode);
+    string CombineShortUrl(string scheme, string host, string shortUrlCode);
 }
