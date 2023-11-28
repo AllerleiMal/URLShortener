@@ -1,19 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NHibernate.Linq;
-using URLShortener.Models;
-using ISession = NHibernate.ISession;
+using URLShortener.Repositories;
 
 namespace URLShortener.Controllers;
 
 [Route("")]
-public class RedirectController(ISession session) : Controller
+public class RedirectController(IUrlMappingRepository repository) : Controller
 {
     [HttpGet("{shortUrlCode}")]
     public async Task<IActionResult> RedirectToLongUrl(string shortUrlCode)
     {
-        var targetUrlMapping = await session
-            .Query<UrlMapping>()
-            .FirstOrDefaultAsync(u => u.ShortUrlCode.Equals(shortUrlCode));
+        var targetUrlMapping = await repository.GetUrlMappingAsync(shortUrlCode);
 
         if (targetUrlMapping is null)
         {
@@ -21,7 +17,7 @@ public class RedirectController(ISession session) : Controller
         }
 
         targetUrlMapping.ClickCounter++;
-        await session.FlushAsync();
+        await repository.SaveChangesAsync();
 
         return Redirect(targetUrlMapping.LongUrl!);
     }
