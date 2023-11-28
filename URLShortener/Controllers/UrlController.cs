@@ -46,12 +46,12 @@ public class UrlController(IUrlMappingRepository repository, IUrlShortener urlSh
     [HttpGet]
     public async Task<IActionResult> CreateUrlMapping()
     {
-        return await Task.FromResult<IActionResult>(View("AddUrl", new ManageShortUrlViewModel()));
+        return await Task.FromResult<IActionResult>(View("AddUrl", new ManageUrlMappingViewModel()));
     }
 
     [HttpPost("url/create")]    
     [ActionName("CreateShortUrl")]
-    public async Task<IActionResult> CreateUrlMapping(ManageShortUrlViewModel model)
+    public async Task<IActionResult> CreateUrlMapping(ManageUrlMappingViewModel model)
     {
         if (!ModelState.IsValid)
         {
@@ -82,5 +82,54 @@ public class UrlController(IUrlMappingRepository repository, IUrlShortener urlSh
         });
         
         return View("AddUrl", model);
+    }
+
+    [HttpGet]
+    [ActionName("UpdateUrlMapping")]
+    public async Task<IActionResult> UpdateUrlMapping()
+    {
+        ViewData["updated"] = false;
+        return await Task.FromResult<IActionResult>(View("UpdateUrl"));
+    }
+    
+    [HttpPost]
+    [ActionName("UpdateUrlMapping")]
+    public async Task<IActionResult> UpdateUrlMapping(ManageUrlMappingViewModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View("UpdateUrl", model);
+        }
+        
+        if (!urlShortener.IsUrlValid(model.LongUrl))
+        {
+            ModelState.AddModelError("LongUrl", "Please enter a valid URL.");
+        }
+        
+        if (!urlShortener.IsUrlValid(model.ShortUrl))
+        {
+            ModelState.AddModelError("ShortUrl", "Please enter a valid URL.");
+        }
+
+        if (!ModelState.IsValid)
+        {
+            return View("UpdateUrl", model);
+        }
+
+        var shortUrlCode = urlShortener.ParseShortUrlCodeFromUrl(model.ShortUrl);
+
+        var targetMapping = await repository.GetUrlMappingAsync(shortUrlCode);
+
+        if (targetMapping is null)
+        {
+            ModelState.AddModelError("ShortUrl", "Mapping with such url is not exist.");
+            return View("UpdateUrl", model);
+        }
+
+        targetMapping.LongUrl = model.LongUrl;
+        await repository.SaveChangesAsync();
+
+        ViewData["updated"] = true;
+        return View("UpdateUrl", model);
     }
 }
