@@ -3,6 +3,7 @@ using FluentNHibernate.Cfg.Db;
 using NHibernate;
 using NHibernate.Tool.hbm2ddl;
 using URLShortener.Mapping;
+using URLShortener.Services;
 using ISession = NHibernate.ISession;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,12 +26,13 @@ builder.Services.AddSingleton(sessionFactory);
 builder.Services.AddScoped<ISession, ISession>(_ => sessionFactory.OpenSession());
 builder.Services.AddKendo();
 
+builder.Services.AddTransient<IUrlShortener, UrlShortener>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
