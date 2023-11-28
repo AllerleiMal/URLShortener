@@ -9,4 +9,5 @@ public interface IUrlMappingRepository
     void AddUrlMappingAsync(UrlMapping? mapping);
     Task<bool> DeleteUrlMappingAsync(int id);
     IQueryable<UrlMapping> GetUrlMappingsQuery();
+    void SaveChangesAsync();
 }
