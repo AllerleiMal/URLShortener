@@ -16,4 +16,9 @@ public class UrlShortener : IUrlShortener
     {
         return $"{scheme}://{host}/{shortUrlCode}";
     }
+
+    public string ParseShortUrlCodeFromUrl(string shortUrl)
+    {
+        return shortUrl.Trim().Split("/")[^1];
+    }
 }

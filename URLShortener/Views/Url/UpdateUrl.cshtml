@@ -1,0 +1,30 @@
+﻿@model ManageUrlMappingViewModel
+
+<div class="form-container">
+    <form class="form" id="url-update" asp-controller="Url" asp-action="UpdateUrlMapping" method="post">
+        <h2 class="h2">Update Target of Short URL</h2>
+        <div class="form-group">
+            <label asp-for="ShortUrl" class="form-label">Short URL</label>
+            <input asp-for="ShortUrl" class="form-control" required>
+            <span asp-validation-for="ShortUrl" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="LongUrl" class="form-label">New long URL</label>
+            <input asp-for="LongUrl" class="form-control" required>
+            <span asp-validation-for="LongUrl" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+
+    @if ((bool)ViewData["updated"])
+    {
+        <div id="update-block">
+            <h3 class="h3">Your short URL now linked with new resource</h3>
+            <span>Short URL</span>
+            <a href="@Model.ShortUrl">@Model.ShortUrl</a>
+            <span>Long URL</span>
+            <a href="@Model.LongUrl">@Model.LongUrl</a>
+        </div>
+    }
+</div>
