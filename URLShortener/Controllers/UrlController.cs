@@ -15,6 +15,7 @@ public class UrlController(IUrlMappingRepository repository, IUrlShortener urlSh
     public async Task<IActionResult> GetUrlMappingList()
     {
         ViewData["baseUrl"] = HttpContext.Request.GetDisplayUrl();
+        ViewData["Title"] = "URL list";
         return await Task.FromResult<IActionResult>(View("Index"));
     }
     
@@ -46,6 +47,7 @@ public class UrlController(IUrlMappingRepository repository, IUrlShortener urlSh
     [HttpGet]
     public async Task<IActionResult> CreateUrlMapping()
     {
+        ViewData["Title"] = "Create short URL";
         return await Task.FromResult<IActionResult>(View("AddUrl", new ManageUrlMappingViewModel()));
     }
 
@@ -89,6 +91,7 @@ public class UrlController(IUrlMappingRepository repository, IUrlShortener urlSh
     public async Task<IActionResult> UpdateUrlMapping()
     {
         ViewData["updated"] = false;
+        ViewData["Title"] = "Update URL mapping";
         return await Task.FromResult<IActionResult>(View("UpdateUrl"));
     }
     
