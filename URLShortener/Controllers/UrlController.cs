@@ -2,13 +2,13 @@
 using Kendo.Mvc.UI;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
-using NHibernate.Linq;
 using URLShortener.Models;
-using ISession = NHibernate.ISession;
+using URLShortener.Repositories;
+using URLShortener.Services;
 
 namespace URLShortener.Controllers;
 
-public class UrlController(ISession session) : Controller
+public class UrlController(IUrlMappingRepository repository, IUrlShortener urlShortener) : Controller
 {
     [ActionName("Index")]
     [HttpGet]
@@ -22,7 +22,7 @@ public class UrlController(ISession session) : Controller
     [ActionName("GetPage")]
     public async Task<IActionResult> Get([DataSourceRequest] DataSourceRequest request)
     {
-        var urlMappings = session.Query<UrlMapping>().AsQueryable();
+        var urlMappings = repository.GetUrlMappingsQuery();
 
         var result = await urlMappings.ToDataSourceResultAsync(request);
         return Json(result);
@@ -32,15 +32,12 @@ public class UrlController(ISession session) : Controller
     [ActionName("Delete")]
     public async Task<IActionResult> Delete(int id)
     {
-        var targetMapping = await session.Query<UrlMapping>().FirstOrDefaultAsync(mapping => mapping.Id == id);
+        var isDeletionSucceeded = await repository.DeleteUrlMappingAsync(id);
     
-        if (targetMapping is null)
+        if (!isDeletionSucceeded)
         {
             return NotFound();
         }
-    
-        await session.DeleteAsync(targetMapping);
-        await session.FlushAsync();
     
         return NoContent();
     }
@@ -61,16 +58,29 @@ public class UrlController(ISession session) : Controller
             return View("AddUrl", model);
         }
         
-        if (!Uri.IsWellFormedUriString(model.ShortUrl, UriKind.Absolute))
+        if (!urlShortener.IsUrlValid(model.LongUrl))
         {
             ModelState.AddModelError("LongUrl", "Please enter a valid URL.");
             return View("AddUrl", model);
         }
+
+
+        var shortUrlCode = urlShortener.GenerateShortUrlCode();
+        var shortUrl = urlShortener.CombineShortUrl(
+            HttpContext.Request.Scheme, 
+            HttpContext.Request.Host.ToString(), 
+            shortUrlCode
+            );
         
-        var shortUrlCode = Guid.NewGuid().ToString()[..16];
-        var shortUrl = HttpContext.Request.Scheme + "://" + HttpContext.Request.Host + "/" + shortUrlCode;
-        Console.WriteLine(shortUrl);
         model.ShortUrl = shortUrl;
+
+        await repository.AddUrlMappingAsync(new UrlMapping
+        {
+            LongUrl = model.LongUrl,
+            ShortUrlCode = shortUrlCode,
+            ClickCounter = 0
+        });
+        
         return View("AddUrl", model);
     }
 }

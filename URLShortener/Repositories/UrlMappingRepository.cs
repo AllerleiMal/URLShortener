@@ -45,7 +45,7 @@ public class UrlMappingRepository(ISession session) : IUrlMappingRepository
 
     public IQueryable<UrlMapping> GetUrlMappingsQuery()
     {
-        return session.Query<UrlMapping>();
+        return session.Query<UrlMapping>().AsQueryable();
     }
 
     public async Task SaveChangesAsync()
