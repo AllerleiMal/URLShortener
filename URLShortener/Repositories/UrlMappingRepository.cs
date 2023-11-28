@@ -47,4 +47,9 @@ public class UrlMappingRepository(ISession session) : IUrlMappingRepository
     {
         return session.Query<UrlMapping>();
     }
+
+    public async void SaveChangesAsync()
+    {
+        await session.FlushAsync();
+    }
 }
