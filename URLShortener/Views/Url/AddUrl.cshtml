@@ -1,0 +1,20 @@
+@model ManageShortUrlViewModel
+
+<div class="form-container">
+    <form class="form" id="url-create" asp-controller="Url" asp-action="CreateShortUrl" method="post">
+        <h2 class="h2">Create short URL</h2>
+        <div class="form-group">
+            <label asp-for="LongUrl" class="form-label">Long URL</label>
+            <input asp-for="LongUrl" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Create</button>
+    </form>
+    
+    @if (!string.IsNullOrEmpty(Model.ShortUrl))
+    {
+        <div>
+            <h3>Your short URL:</h3>
+            <a href="@Model.ShortUrl">@Model.ShortUrl</a>
+        </div>
+    }
+</div>
