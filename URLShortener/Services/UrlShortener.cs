@@ -12,8 +12,8 @@ public class UrlShortener : IUrlShortener
         return Guid.NewGuid().ToString()[..16];
     }
 
-    public string CombineShortUrl(string schema, string host, string shortUrlCode)
+    public string CombineShortUrl(string scheme, string host, string shortUrlCode)
     {
-        return $"{schema}://{host}/{shortUrlCode}";
+        return $"{scheme}://{host}/{shortUrlCode}";
     }
 }
