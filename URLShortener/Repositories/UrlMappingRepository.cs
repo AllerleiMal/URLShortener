@@ -18,7 +18,7 @@ public class UrlMappingRepository(ISession session) : IUrlMappingRepository
             .FirstOrDefaultAsync(mapping => mapping.Id == id);
     }
 
-    public async void AddUrlMappingAsync(UrlMapping? mapping)
+    public async Task AddUrlMappingAsync(UrlMapping? mapping)
     {
         if (mapping is null)
         {
@@ -48,7 +48,7 @@ public class UrlMappingRepository(ISession session) : IUrlMappingRepository
         return session.Query<UrlMapping>();
     }
 
-    public async void SaveChangesAsync()
+    public async Task SaveChangesAsync()
     {
         await session.FlushAsync();
     }
