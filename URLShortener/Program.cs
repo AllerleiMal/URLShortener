@@ -1,6 +1,5 @@
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
-using NHibernate;
 using NHibernate.Tool.hbm2ddl;
 using URLShortener.Mapping;
 using URLShortener.Repositories;
@@ -25,7 +24,6 @@ var sessionFactory = Fluently.Configure()
 
 builder.Services.AddSingleton(sessionFactory);
 builder.Services.AddScoped<ISession, ISession>(_ => sessionFactory.OpenSession());
-builder.Services.AddKendo();
 
 builder.Services.AddTransient<IUrlShortener, UrlShortener>();
 builder.Services.AddScoped<IUrlMappingRepository, UrlMappingRepository>();
