@@ -40,20 +40,46 @@ body {
   flex-direction: column;
 }
 
-.k-grid a{
+#url-table a{
   text-decoration: underline;
   cursor: pointer;
 }
 
-.k-grid a.short-url{
+a.short-url{
   color: #0c63e4;
 }
 
-.k-grid a.long-url{
+a.long-url{
   color: #0ce449;
 }
 
 #update-block{
   display: flex;
   flex-direction: column;
+}
+
+.url-table-container{
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#url-table{
+  text-align: left;
+  width: 100%;
+  border: solid 2px #ddd;
+}
+
+#url-table tr:hover {
+  background-color: #ffd6b8;
+}
+
+#url-table th, td {
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+}
+
+.click-counter-td {
+  width: 15%;
 }
