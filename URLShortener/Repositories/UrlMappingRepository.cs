@@ -48,6 +48,12 @@ public class UrlMappingRepository(ISession session) : IUrlMappingRepository
         return session.Query<UrlMapping>().AsQueryable();
     }
 
+    public async Task<List<UrlMapping>> GetPaginatedData(int pageSize, int pageNumber)
+    {
+        return await session.Query<UrlMapping>().OrderBy(mapping => mapping.Id).Skip(pageSize * (pageNumber - 1))
+            .Take(pageSize).ToListAsync();
+    }
+
     public async Task SaveChangesAsync()
     {
         await session.FlushAsync();
