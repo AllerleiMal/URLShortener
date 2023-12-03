@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Http.Extensions;
+﻿using System.Text.Json;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using NHibernate.Linq;
 using URLShortener.Models;
 using URLShortener.Repositories;
 using URLShortener.Services;
+using URLShortener.Wrappers;
 
 namespace URLShortener.Controllers;
 
@@ -17,15 +20,23 @@ public class UrlController(IUrlMappingRepository repository, IUrlShortener urlSh
         return await Task.FromResult<IActionResult>(View("Index"));
     }
     
-    // [HttpPost("url/getPage")]
-    // [ActionName("GetPage")]
-    // public async Task<IActionResult> Get([DataSourceRequest] DataSourceRequest request)
-    // {
-    //     var urlMappings = repository.GetUrlMappingsQuery();
-    //
-    //     var result = await urlMappings.ToDataSourceResultAsync(request);
-    //     return Json(result);
-    // }
+    [HttpGet("url/getPage")]
+    [ActionName("GetPage")]
+    public async Task<IActionResult> Get(int pageSize, int pageNumber)
+    {
+        var urlMappings = await repository.GetPaginatedData(pageSize, pageNumber);
+        var totalRecords = await repository.GetUrlMappingsQuery().LongCountAsync();
+
+        // var result = JsonSerializer.Serialize(urlMappings);
+        var response = new PaginatedResponse<UrlMapping>
+        {
+            PageSize = pageSize,
+            PageNumber = pageNumber,
+            TotalRecords = totalRecords,
+            Data = urlMappings
+        };
+        return Json(JsonSerializer.Serialize(response));
+    }
 
     [HttpDelete("url/delete")]
     [ActionName("Delete")]
