@@ -9,10 +9,11 @@
     <ItemGroup>
       <_ContentIncludedByDefault Remove="Views\Home\Index.cshtml" />
       <_ContentIncludedByDefault Remove="Views\Home\Privacy.cshtml" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="wwwroot\lib\kendo-ui\dist\css\" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\kendo-ui\dist\css\default-main.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\kendo-ui\dist\js\kendo.all.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\kendo-ui\dist\js\kendo.all.min.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\kendo-ui\dist\js\kendo.all.min.js.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\kendo-ui\dist\js\kendo.aspnetmvc.min.js" />
     </ItemGroup>
 
     <ItemGroup>
@@ -20,7 +21,6 @@
       <PackageReference Include="MySql.Data" Version="8.2.0" />
       <PackageReference Include="NHibernate" Version="5.4.6" />
       <PackageReference Include="NHibernate.NetCore" Version="8.0.0" />
-      <PackageReference Include="Telerik.UI.for.AspNet.Core.Trial" Version="2023.3.1114" />
     </ItemGroup>
 
 </Project>

@@ -1,6 +1,4 @@
-﻿using Kendo.Mvc.Extensions;
-using Kendo.Mvc.UI;
-using Microsoft.AspNetCore.Http.Extensions;
+﻿using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using URLShortener.Models;
 using URLShortener.Repositories;
@@ -19,15 +17,15 @@ public class UrlController(IUrlMappingRepository repository, IUrlShortener urlSh
         return await Task.FromResult<IActionResult>(View("Index"));
     }
     
-    [HttpPost("url/getPage")]
-    [ActionName("GetPage")]
-    public async Task<IActionResult> Get([DataSourceRequest] DataSourceRequest request)
-    {
-        var urlMappings = repository.GetUrlMappingsQuery();
-
-        var result = await urlMappings.ToDataSourceResultAsync(request);
-        return Json(result);
-    }
+    // [HttpPost("url/getPage")]
+    // [ActionName("GetPage")]
+    // public async Task<IActionResult> Get([DataSourceRequest] DataSourceRequest request)
+    // {
+    //     var urlMappings = repository.GetUrlMappingsQuery();
+    //
+    //     var result = await urlMappings.ToDataSourceResultAsync(request);
+    //     return Json(result);
+    // }
 
     [HttpDelete("url/delete")]
     [ActionName("Delete")]
