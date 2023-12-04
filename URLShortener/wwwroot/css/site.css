@@ -41,15 +41,16 @@ body {
 }
 
 #url-table a{
-  text-decoration: underline;
   cursor: pointer;
 }
 
 a.short-url{
+  text-decoration: underline;
   color: #0c63e4;
 }
 
 a.long-url{
+  text-decoration: underline;
   color: #0ce449;
 }
 
@@ -65,6 +66,7 @@ a.long-url{
   justify-content: center;
   align-items: center;
 }
+
 #url-table{
   text-align: left;
   width: 100%;
@@ -82,4 +84,31 @@ a.long-url{
 
 .click-counter-td {
   width: 15%;
+}
+
+.page-controller{
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.pagination-settings{
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  flex-direction: row;
+}
+
+.page-sizes{
+  padding-left: 5px;
+  color: darkgray;
+  text-decoration: underline dotted;
+}
+
+.delete-mapping-btn {
+  background: rgba(255,142,114,0.58);
+  padding: 5px;
+  border-radius: 4px;
+  color: black;
+  text-decoration: none;
 }
