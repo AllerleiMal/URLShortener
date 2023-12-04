@@ -74,7 +74,9 @@ function addUrlMappingInTable(table, mapping) {
 
 
     shortUrlCell.innerHTML = `<a class="short-url" href="${window.location.origin}/${mapping.ShortUrlCode}">${window.location.origin}/${mapping.ShortUrlCode}</a>`;
+    shortUrlCell.className = 'short-url-td';
     longUrlCell.innerHTML = `<a class="long-url" href="${mapping.LongUrl}">${mapping.LongUrl}</a>`;
+    longUrlCell.className = 'long-url-td';
     clickCounterCell.innerHTML = mapping.ClickCounter;
     creationDateCell.innerHTML = mapping.CreationDate.replace("T", " ");
     let deleteBtn = document.createElement('a');
