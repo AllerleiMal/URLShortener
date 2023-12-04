@@ -11,5 +11,6 @@ public class UrlMappingMap : ClassMap<UrlMapping>
         Map(x => x.ShortUrlCode);
         Map(x => x.LongUrl);
         Map(x => x.ClickCounter);
+        Map(x => x.CreationDate);
     }
 }
