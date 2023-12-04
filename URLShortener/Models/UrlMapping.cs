@@ -6,4 +6,5 @@ public class UrlMapping
     public virtual string? LongUrl { get; set; }
     public virtual string? ShortUrlCode { get; set; }
     public virtual long ClickCounter { get; set; }
+    public virtual DateTime CreationDate { get; set; } = DateTime.Now;
 }
