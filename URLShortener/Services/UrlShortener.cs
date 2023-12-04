@@ -2,9 +2,9 @@
 
 public class UrlShortener : IUrlShortener
 {
-    public bool IsUrlValid(string url)
+    public bool IsUrlValid(string? url)
     {
-        return Uri.IsWellFormedUriString(url, UriKind.Absolute);
+        return url is not null && Uri.IsWellFormedUriString(url, UriKind.Absolute);
     }
 
     public string GenerateShortUrlCode()

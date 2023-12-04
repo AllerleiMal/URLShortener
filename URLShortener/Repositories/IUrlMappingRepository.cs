@@ -8,7 +8,7 @@ public interface IUrlMappingRepository
     Task<UrlMapping?> GetUrlMappingAsync(int id);
     Task AddUrlMappingAsync(UrlMapping? mapping);
     Task<bool> DeleteUrlMappingAsync(int id);
-    IQueryable<UrlMapping> GetUrlMappingsQuery();
-    Task<List<UrlMapping>> GetPaginatedData(int pageSize, int pageNumber);
+    Task<long> GetRecordsAmountAsync();
+    Task<List<UrlMapping>> GetPaginatedDataAsync(int pageSize, int pageNumber);
     Task SaveChangesAsync();
 }

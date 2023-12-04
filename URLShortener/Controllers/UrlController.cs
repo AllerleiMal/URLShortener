@@ -1,7 +1,6 @@
 ﻿using System.Text.Json;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
-using NHibernate.Linq;
 using URLShortener.Models;
 using URLShortener.Repositories;
 using URLShortener.Services;
@@ -24,10 +23,19 @@ public class UrlController(IUrlMappingRepository repository, IUrlShortener urlSh
     [ActionName("GetPage")]
     public async Task<IActionResult> Get(int pageSize, int pageNumber)
     {
-        var urlMappings = await repository.GetPaginatedData(pageSize, pageNumber);
-        var totalRecords = await repository.GetUrlMappingsQuery().LongCountAsync();
-
-        // var result = JsonSerializer.Serialize(urlMappings);
+        var totalRecords = await repository.GetRecordsAmountAsync();
+        if (pageSize < 0 || pageNumber < 1)
+        {
+            return Json(new PaginatedResponse<UrlMapping>
+            {
+                Data = new List<UrlMapping>(),
+                PageSize = 0,
+                PageNumber = 1,
+                TotalRecords = totalRecords
+            });
+        }
+        var urlMappings = await repository.GetPaginatedDataAsync(pageSize, pageNumber);
+        
         var response = new PaginatedResponse<UrlMapping>
         {
             PageSize = pageSize,
@@ -42,6 +50,11 @@ public class UrlController(IUrlMappingRepository repository, IUrlShortener urlSh
     [ActionName("Delete")]
     public async Task<IActionResult> Delete(int id)
     {
+        if (id < 0)
+        {
+            return NotFound();
+        }
+        
         var isDeletionSucceeded = await repository.DeleteUrlMappingAsync(id);
     
         if (!isDeletionSucceeded)

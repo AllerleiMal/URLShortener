@@ -43,12 +43,12 @@ public class UrlMappingRepository(ISession session) : IUrlMappingRepository
         return true;
     }
 
-    public IQueryable<UrlMapping> GetUrlMappingsQuery()
+    public async Task<long> GetRecordsAmountAsync()
     {
-        return session.Query<UrlMapping>().AsQueryable();
+        return await session.Query<UrlMapping>().LongCountAsync();
     }
 
-    public async Task<List<UrlMapping>> GetPaginatedData(int pageSize, int pageNumber)
+    public async Task<List<UrlMapping>> GetPaginatedDataAsync(int pageSize, int pageNumber)
     {
         return await session.Query<UrlMapping>().OrderBy(mapping => mapping.Id).Skip(pageSize * (pageNumber - 1))
             .Take(pageSize).ToListAsync();
