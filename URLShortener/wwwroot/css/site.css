@@ -83,7 +83,15 @@ a.long-url{
 }
 
 .click-counter-td {
-  width: 15%;
+  width: 10%;
+}
+
+.long-url-td{
+  width: 40%;
+  word-break: break-all;
+}
+.short-url-td{
+  width: 30%;
 }
 
 .page-controller{
