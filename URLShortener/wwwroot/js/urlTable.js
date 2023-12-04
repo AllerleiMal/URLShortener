@@ -106,8 +106,6 @@ async function refreshTable() {
     let table = document.getElementById('url-table').getElementsByTagName('tbody')[0];
     table.innerHTML = "";
 
-    console.log(response)
-
     response.Data.forEach(mapping => {
         addUrlMappingInTable(table, mapping);
     })
