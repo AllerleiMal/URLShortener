@@ -38,7 +38,7 @@ public class UrlController(IUrlMappingRepository repository, IUrlShortener urlSh
         return Json(JsonSerializer.Serialize(response));
     }
 
-    [HttpDelete("url/delete")]
+    [HttpGet("url/delete")]
     [ActionName("Delete")]
     public async Task<IActionResult> Delete(int id)
     {

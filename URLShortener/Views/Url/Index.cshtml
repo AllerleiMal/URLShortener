@@ -1,14 +1,33 @@
 <div class="url-table-container">
     <h1 class="h1">Available URL Mappings</h1>
+    <span id="current-records-info"></span>
     <table id="url-table">
         <thead>
         <th scope="col">Short URL</th>
         <th scope="col">Long URL</th>
         <th scope="col" class="click-counter-td">Click Counter</th>
+        <th scope="col">Creation Date</th>
+        <th scope="col"></th>
         </thead>
         <tbody>
         </tbody>
     </table>
+    <div class="pagination-settings">
+        <div class="page-picker">
+            <img src="~/images/angle-double-small-left.svg" alt="" class="page-controller" id="first-page-picker" disabled="true"/>
+            <img src="~/images/angle-left.svg" alt="" class="page-controller" id="previous-page-picker" disabled="true"/>
+            <span id="current-page-number">1</span>
+            <img src="~/images/angle-right.svg" alt="" class="page-controller" id="next-page-picker"/>
+            <img src="~/images/angle-double-small-right.svg" alt="" class="page-controller" id="last-page-picker"/>
+        </div>
+        <div class="page-size-picker">
+            <span>Records per page:</span>
+            <a class="page-sizes">5</a>
+            <a class="page-sizes">10</a>
+            <a class="page-sizes">15</a>
+            <a class="page-sizes">20</a>
+        </div>
+    </div>
 </div>
 
 <script src="~/js/urlTable.js"></script>
